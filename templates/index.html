@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Url Shortner</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>URL SHORTENER:</h1>
+        <h4 style="padding: 5px; background: white; margin-bottom: 10px; word-wrap: break-word;">{{request.session.message}}</h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="input-container">
+                <input type="text" name="link" autofocus placeholder="https://www.google.com/" class="url-input"><br>
+            </div>
+            <input type="submit" class="submit" onclick="location.reload()" value="Shorten Url !">
+        </form>
+    </div>
+    <script type="text/javascript">
+        var uid = '{{uid}}'
+        if(uid != ""){
+            elem = document.createElement('div')
+            elem.classList = 'new-url'
+            document.getElementsByClassName('url-input')[0].remove()
+            elem.innerText = "localhost:8000/"+uid
+            document.getElementsByClassName('input-container')[0].appendChild(elem)
+            document.getElementsByClassName('submit')[0].type = 'button'
+            document.getElementsByClassName('submit')[0].value = "Shorten Next !"
+            console.log(uid);
+        }
+
+        var message = '{{request.session.message}}'
+        console.log(message)
+        if(message == ""){
+            document.getElementsByTagName('h4')[0].remove();
+        }
+    </script>
+</body>
+</html>
